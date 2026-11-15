@@ -1,0 +1,74 @@
+    1  whoami
+    2  getent passwd 1234
+    3  getent passwd user1
+    4  getent group students
+    5  groupadd students
+    6  getent group students
+    7  useradd -m -u 1234 -G students user1
+    8  passwd user1
+    9  chage -M 90 user1
+   10  id user1
+   11  getent group students
+   12  chage -l user1
+   13  stat /home/user1
+   14  OUT=/home/user1/mephi-linux-security-2026
+   15  mkdir -p "$OUT"
+   16  chmod 750 "$OUT"
+   17  printf 'OUT=%s\n' "$OUT"
+   18  ls "$OUT"
+   19  ls -ld "$OUT"
+   20  stat /home/user1 > "$OUT/stat.out"
+   21  find / -type f -perm -4000 -print 2>/dev/null > "$OUT/suid-files.out"
+   22  ls -l "$OUT/suid-files.out" 
+   23  wc -l "$OUT/suid-files.out" 
+   24  head "$OUT/suid-files.out"
+   25  ps -eo ruid=,euid,pid=,comm= | awk '$1 != 0 && $2 == 0'
+   26  OUT=/home/user1/mephi-linux-security-2026
+   27  mkdir -p "$OUT"
+   28  ps -eo ruid=,euid,pid=,comm= | awk '$1 != 0 && $2 == 0' > "$OUT/privileged-processes.out"
+   29  cat "$OUT/privileged-processes.out" 
+   30  printf '%s\n' 'readtestvia set-uid' > /root/suid-probe.txt
+   31  chmod 600 /root/suid-probe.txt
+   32  stst /root/suid-probe.txt 
+   33  stat /root/suid-probe.txt 
+   34  OUT=/home/user1/mephi-linux-security-2026
+   35  mkdir -p "$OUT"
+   36  cp /usr/bin/cat /home/user1/cat
+   37  chown root:root /home/user1/cat
+   38  chmod 4755 /home/user1/cat
+   39  ls -l /home/user1/cat
+   40  stat /home/user1/cat >> "$OUT/stat.out"
+   41  ls -l
+   42  su - user1
+   43  cp /usr/bin/chown /home/user1/chown
+   44  chown root:root /home/user1/chown
+   45  chmod 0755 /home/user1/chown
+   46  setcap cap_chown+ep /home/user1/chown
+   47  printf '%\n' 'test cap_chown' > /home/user1/cap-probe.txt
+   48  printf '%s\n' 'test cap_chown' > /home/user1/cap-probe.txt
+   49  chown root:root /home/user1/cap-probe.txt
+   50  stat /home/user1/cap-probe.txt
+   51  out=/home/user1/mephi-linux-security-2026
+   52  mkdir -p "$OUT"
+   53  getcap /home/user1/chown 
+   54  stat /home/user1/chown
+   55  getcap /home/user1/chown > "$OUT/getcap.out"
+   56  stat /home/user1/chown >> "$OUT/getcap.out"
+   57  su - user1
+   58  visudo -f /etc/sudoers.d/user1-time
+   59* 
+   60  visudo -f /etc/sudoers.d/user1-time
+   61  visudo -cf /etc/sudoers.d/user1-time
+   62  cp /etc/sudoers "$OUT/sudoers.out"
+   63  cp /etc/sudoers.d/user1-time "$OUT/sudoers-user1-time.out"
+   64  su - user1
+   65  OUT=/home/user1/mephi-linux-security-2026
+   66  mkdir -p "$OUT"
+   67  cp /etc/passwd "$OUT/passwd.out"
+   68  cp /etc/shadow "$OUT/shadow.out"
+   69  cp /etc/group "$OUT/group.out"
+   70  cp /etc/sudoers "$OUT/sudoers.out"
+   71  cp /etc/sudoers.d/user1-time "$OUT/sudoers-user1-time.out" 
+   72  OUT=/home/user1/mephi-linux-security-2026
+   73  mkdir -p "OUT"
+   74  history > "$OUT/history.out"
